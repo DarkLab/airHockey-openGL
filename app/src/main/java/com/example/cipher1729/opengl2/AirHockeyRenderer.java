@@ -13,6 +13,8 @@ import java.nio.FloatBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import static android.opengl.Matrix.orthoM;
+
 /**
  * Created by cipher1729 on 7/28/2015.
  */
@@ -33,7 +35,10 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
     private int vColorLocation;
     private static final String A_POSITION = "a_Position";
     private int aPositionLocation;
+    private static final String MATRIX_POSITION = "u_Matrix";
+    private int uMatrixPosition;
 
+    private final float[] projectionMatrix = new float[16];
     public  AirHockeyRenderer(Context context)
     {
        float [] tableWithVertices = { // Triangle Fan
@@ -52,6 +57,8 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
                0f, -0.25f, 0f, 0f, 1f,
                0f,  0.25f, 1f, 0f, 0f
        };
+
+
         vertexData = ByteBuffer.allocateDirect(tableWithVertices.length * BYTES_PER_FLOAT).order(ByteOrder.nativeOrder()).asFloatBuffer();
         vertexData.put(tableWithVertices);
         this.context = context;
@@ -87,8 +94,19 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
     }
 
     @Override
-    public void onSurfaceChanged(GL10 gl10, int i, int i2) {
-        gl10.glViewport(0,0,i,i2);
+    public void onSurfaceChanged(GL10 gl10, int width, int height) {
+
+
+        gl10.glViewport(0,0,width,height);
+        final float aspectRatio = width > height ?
+                (float) width / (float) height :
+                (float) height / (float) width;
+        if(width > height)
+        {
+            orthoM(projectionMatrix, 0, -aspectRatio, aspectRatio, -1f, 1f, -1f, 1f);
+        }
+        else
+            orthoM(projectionMatrix,0,-1f,1f,-aspectRatio,aspectRatio,-1f,1f);
     }
 
     @Override
@@ -110,6 +128,6 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
         //GLES20.glUniform4f(uColorLocation, 0.0f, 0.0f, 0.0f, 1.0f);
         GLES20.glDrawArrays(GLES20.GL_POINTS, 10, 1);
 
-
+        GLES20.glUniformMatrix4fv(uMatrixPosition,1, false,projectionMatrix,0);
     }
 }
