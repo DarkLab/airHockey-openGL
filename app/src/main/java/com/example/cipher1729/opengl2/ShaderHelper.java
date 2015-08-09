@@ -93,6 +93,23 @@ public class ShaderHelper {
         return validateStatus[0] != 0;
     }
 
+    public static int buildProgram(String vertexShaderSource,
+                                   String fragmentShaderSource) {
+
+        int vertexProgramId = GLES20.glCreateShader(GLES20.GL_VERTEX_SHADER);
+        int fragmentProgramId= GLES20.glCreateShader(GLES20.GL_FRAGMENT_SHADER);
+        GLES20.glShaderSource(vertexProgramId,vertexShaderSource);
+        GLES20.glShaderSource(fragmentProgramId,fragmentShaderSource);
+        GLES20.glCompileShader(vertexProgramId);
+        GLES20.glCompileShader(fragmentProgramId);
+        final int programId = GLES20.glCreateProgram();
+        GLES20.glAttachShader(programId,vertexProgramId);
+        GLES20.glAttachShader(programId,fragmentProgramId);
+        GLES20.glLinkProgram(programId);
+
+
+        return programId;
+    }
 
     }
 
