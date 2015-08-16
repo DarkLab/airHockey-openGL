@@ -29,7 +29,7 @@ public class TextureHelper {
         }
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inScaled = false;
-        final Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId);
+        final Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId,options);
         if (bitmap == null) {
             if (LoggerConfig.ON) {
                 Log.w(TAG, "Resource ID " + resourceId + " could not be decoded.");
@@ -41,10 +41,10 @@ public class TextureHelper {
         glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
         texImage2D(GL_TEXTURE_2D, 0, bitmap, 0);
-        bitmap.recycle();
+
         glGenerateMipmap(GL_TEXTURE_2D);
         glBindTexture(GLES20.GL_TEXTURE_2D,0);
-
+        bitmap.recycle();
         return textureObjectIds[0];
     }
 }

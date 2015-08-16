@@ -1,0 +1,9 @@
+General flow:
+
+1. load the texture programs and get attributes
+2. make a programs
+3. use the programs
+4. feed in texture and projection matrix into programs
+5. use the bind data to get the data (ie position and texture thingies coordinates form the program)
+6. draw using TRIANGLE_LOOP
+

@@ -26,13 +26,16 @@ public class Mallet {
                 colorProgram.getPositionAttributeLocation(),
                 POSITION_COMPONENT_COUNT,
                 STRIDE);
+
         vertexArray.setVertexAttribPointer(
                 POSITION_COMPONENT_COUNT,
                 colorProgram.getColorAttributeLocation(),
                 COLOR_COMPONENT_COUNT,
                 STRIDE);
+
     }
     public void draw() {
+
         GLES20.glDrawArrays(GLES20.GL_POINTS, 0, 2);
     }
 }
