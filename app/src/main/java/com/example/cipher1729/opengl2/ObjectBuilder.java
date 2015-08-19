@@ -13,6 +13,7 @@ public class ObjectBuilder {
     private final float[] vertexData;
     private int offset=0;
     private final ArrayList<DrawCommand> drawList;
+
     private ObjectBuilder(int sizeInVertices)
     {
         vertexData = new float[sizeInVertices* FLOATS_PER_VERTEX];
@@ -45,6 +46,31 @@ public class ObjectBuilder {
         objectBuilder.appendOpenCylinder(puck, numPoints);
         return objectBuilder.build();
     }
+
+    static GeneratedData CreateMallet(Geometry.Point center, int numPoints, float radius, float height)
+    {
+        int size = sizeOfCircleInVertices(numPoints)*2 + sizeOfOpenCylinderInVertices(numPoints)*2;
+        ObjectBuilder objectBuilder = new ObjectBuilder(size);
+
+        float baseHeight= (float) (0.25* height);
+        Geometry.Circle baseCircle = new Geometry.Circle(radius, center.translateY(-baseHeight));
+        Geometry.Cylinder baseCylinder= new Geometry.Cylinder(baseCircle.center.translateY(-baseHeight / 2f),radius, height);
+
+        objectBuilder.appendCircle(baseCircle, numPoints);
+        objectBuilder.appendOpenCylinder(baseCylinder, numPoints);
+
+        float handleHeight = height * 0.75f;
+        float handleRadius = radius / 3f;
+
+        Geometry.Circle handleCircle = new Geometry.Circle(handleRadius, center.translateY(height*0.5f));
+        Geometry.Cylinder handleCylinder= new Geometry.Cylinder(handleCircle.center.translateY(-handleHeight/2f),handleRadius,handleHeight);
+
+        objectBuilder.appendCircle(handleCircle, numPoints);
+        objectBuilder.appendOpenCylinder(handleCylinder, numPoints);
+
+        return objectBuilder.build();
+    }
+
 
     private void appendOpenCylinder(Geometry.Cylinder cylinder, final int numPoints) {
         final int startVertex = offset / FLOATS_PER_VERTEX;
