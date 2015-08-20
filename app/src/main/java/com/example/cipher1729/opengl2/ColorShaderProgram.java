@@ -13,6 +13,7 @@ public class ColorShaderProgram extends ShaderProgram{
     //Attribute locations
     private int aPositionLocation;
     private int aColorLocation;
+    private int uColorLoation;
 
     public ColorShaderProgram(Context context)
     {
@@ -20,11 +21,13 @@ public class ColorShaderProgram extends ShaderProgram{
         uMatrixLocation = GLES20.glGetUniformLocation(program,U_MATRIX);
         aPositionLocation = GLES20.glGetAttribLocation(program,A_POSITION);
         aColorLocation = GLES20.glGetAttribLocation(program,A_COLOR);
+        uColorLoation =GLES20.glGetAttribLocation(program,U_COLOR);
     }
 
-    public void setUniforms(float[] matrix) {
+    public void setUniforms(float[] matrix, float r, float g, float b) {
 // Pass the matrix into the shader program.
         GLES20.glUniformMatrix4fv(uMatrixLocation, 1, false, matrix, 0);
+        GLES20.glUniform4f(uColorLoation,r,g,b,1f);
     }
     public int getPositionAttributeLocation() {
         return aPositionLocation;
