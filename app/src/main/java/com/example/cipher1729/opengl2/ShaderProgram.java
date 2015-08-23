@@ -11,30 +11,33 @@ import java.io.IOException;
 public class ShaderProgram {
     // Uniform constants
     protected static final String U_MATRIX = "u_Matrix";
+    protected static final String U_COLOR = "u_Color";
     protected static final String U_TEXTURE_UNIT = "u_TextureUnit";
-    protected static final String U_COLOR= "u_Color";
+
     // Attribute constants
     protected static final String A_POSITION = "a_Position";
     protected static final String A_COLOR = "a_Color";
     protected static final String A_TEXTURE_COORDINATES = "a_TextureCoordinates";
-    int program;
 
-
+    // Shader program
+    protected int program;
 
     protected ShaderProgram(Context context, int vertexShaderResourceId,
-                            int fragmentShaderResourceId)
-    {
+                            int fragmentShaderResourceId) {
+        // Compile the shaders and link the program.
         try {
-            program = ShaderHelper.buildProgram(TextResourceReader.readTextFileFromResource(context,vertexShaderResourceId),
-                    TextResourceReader.readTextFileFromResource(context, fragmentShaderResourceId));
+            program = ShaderHelper.buildProgram(
+                    TextResourceReader
+                            .readTextFileFromResource(context, vertexShaderResourceId),
+                    TextResourceReader
+                            .readTextFileFromResource(context, fragmentShaderResourceId));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public void useProgram() {
-// Set the current OpenGL shader program to this program.
+        // Set the current OpenGL shader program to this program.
         GLES20.glUseProgram(program);
     }
 }

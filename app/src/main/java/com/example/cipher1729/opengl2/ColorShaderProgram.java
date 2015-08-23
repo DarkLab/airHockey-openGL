@@ -21,7 +21,7 @@ public class ColorShaderProgram extends ShaderProgram{
         uMatrixLocation = GLES20.glGetUniformLocation(program,U_MATRIX);
         aPositionLocation = GLES20.glGetAttribLocation(program,A_POSITION);
         aColorLocation = GLES20.glGetAttribLocation(program,A_COLOR);
-        uColorLoation =GLES20.glGetAttribLocation(program,U_COLOR);
+        uColorLoation =GLES20.glGetUniformLocation(program,U_COLOR);
     }
 
     public void setUniforms(float[] matrix, float r, float g, float b) {

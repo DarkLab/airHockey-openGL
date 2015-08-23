@@ -13,7 +13,7 @@ public class Puck {
     List<ObjectBuilder.DrawCommand> drawList;
     public Puck(float radius, float height, int  numPoints)
     {
-        ObjectBuilder.GeneratedData generatedData = ObjectBuilder.CreatePuck(new Geometry.Cylinder(new Geometry.Point(0f,0f,0f),radius,height),numPoints);
+        ObjectBuilder.GeneratedData generatedData = ObjectBuilder.createPuck(new Geometry.Cylinder(new Geometry.Point(0f,0f,0f),radius,height),numPoints);
         this.radius = radius;
         this.height = height;
         vertexArray = new VertexArray(generatedData.vertexData);

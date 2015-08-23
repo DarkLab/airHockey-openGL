@@ -12,12 +12,12 @@ public class Mallet {
     public static int componentCount=3;
     private static final int POSITION_COMPONENT_COUNT = 3;
 
-    float radius, height;
+    float radius,height;
     VertexArray vertexArray;
     List<ObjectBuilder.DrawCommand> drawList;
 
     public Mallet(float radius, float height, int  numPoints)
-    {   ObjectBuilder.GeneratedData generatedData = ObjectBuilder.CreateMallet(new Geometry.Point(0f,0f,0f),numPoints,radius,height);
+    {   ObjectBuilder.GeneratedData generatedData = ObjectBuilder.createMallet(new Geometry.Point(0f, 0f, 0f), radius, height,numPoints);
         this.radius = radius;
         this.height = height;
         vertexArray = new VertexArray(generatedData.vertexData);
