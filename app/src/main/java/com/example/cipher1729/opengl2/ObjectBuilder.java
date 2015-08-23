@@ -114,10 +114,10 @@ class ObjectBuilder {
             vertexData[offset++] =
                     circle.center.x
                             + circle.radius * FloatMath.cos(angleInRadians);
-            vertexData[offset++] = circle.center.y;
+            vertexData[offset++] = circle.center.y + circle.radius * FloatMath.sin(angleInRadians);;
             vertexData[offset++] =
                     circle.center.z
-                            + circle.radius * FloatMath.sin(angleInRadians);
+                            ;
         }
         drawList.add(new DrawCommand() {
             @Override
@@ -130,8 +130,8 @@ class ObjectBuilder {
     private void appendOpenCylinder(Geometry.Cylinder cylinder, int numPoints) {
         final int startVertex = offset / FLOATS_PER_VERTEX;
         final int numVertices = sizeOfOpenCylinderInVertices(numPoints);
-        final float yStart = cylinder.center.y - (cylinder.height / 2f);
-        final float yEnd = cylinder.center.y + (cylinder.height / 2f);
+        final float zStart = cylinder.center.z - (cylinder.height / 2f);
+        final float zEnd = cylinder.center.z + (cylinder.height / 2f);
 
         // Generate strip around center point. <= is used because we want to
         // generate the points at the starting angle twice, to complete the
@@ -145,17 +145,17 @@ class ObjectBuilder {
                     cylinder.center.x
                             + cylinder.radius * FloatMath.cos(angleInRadians);
 
-            float zPosition =
-                    cylinder.center.z
+            float yPosition =
+                    cylinder.center.y
                             + cylinder.radius * FloatMath.sin(angleInRadians);
 
             vertexData[offset++] = xPosition;
-            vertexData[offset++] = yStart;
-            vertexData[offset++] = zPosition;
+            vertexData[offset++] = yPosition;
+            vertexData[offset++] = zStart;
 
             vertexData[offset++] = xPosition;
-            vertexData[offset++] = yEnd;
-            vertexData[offset++] = zPosition;
+            vertexData[offset++] = yPosition;
+            vertexData[offset++] = zEnd;
         }
         drawList.add(new DrawCommand() {
             @Override

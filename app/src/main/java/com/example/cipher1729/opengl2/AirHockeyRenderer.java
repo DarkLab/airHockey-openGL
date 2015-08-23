@@ -107,13 +107,13 @@ public class AirHockeyRenderer implements Renderer {
         table.draw();
 
         // Draw the mallets.
-        positionObjectInScene(0f, mallet.height / 2f, -0.4f);
+        positionObjectInScene(0f, mallet.height / 2f, -1f);
         colorProgram.useProgram();
         colorProgram.setUniforms(modelViewProjectionMatrix, 1f, 0f, 0f);
         mallet.bindData(colorProgram);
         mallet.draw();
 
-        positionObjectInScene(0f, mallet.height / 2f, 0.4f);
+        positionObjectInScene(0f, mallet.height / 2f, 1f);
         colorProgram.setUniforms(modelViewProjectionMatrix, 0f, 0f, 1f);
         // Note that we don't have to define the object data twice -- we just
         // draw the same mallet again but in a different position and with a
@@ -133,7 +133,7 @@ public class AirHockeyRenderer implements Renderer {
 
         setIdentityM(modelMatrix, 0);
         //translateM(modelMatrix,0,0f,0f,0.6f);
-        rotateM(modelMatrix, 0, -90f, 1f, 0f, 0f);
+        //rotateM(modelMatrix, 0, -90f, 1f, 0f, 0f);
 
         final float[] temp = new float[16];
         multiplyMM(temp, 0, viewProjectionMatrix, 0, modelMatrix, 0);
@@ -146,7 +146,7 @@ public class AirHockeyRenderer implements Renderer {
     private void positionObjectInScene(float x, float y, float z) {
         setIdentityM(modelMatrix, 0);
         translateM(modelMatrix, 0, x, y, z);
-       // rotateM(modelMatrix, 0, -90f, 1f, 0f, 0f);
+        //rotateM(modelMatrix, 0, -90f, 1f, 0f, 0f);
         final float[] temp = new float[16];
         multiplyMM(temp, 0, viewProjectionMatrix, 0, modelMatrix, 0);
         System.arraycopy(temp, 0, modelViewProjectionMatrix, 0, temp.length);
